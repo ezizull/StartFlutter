@@ -17,8 +17,6 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final appc = Get.put(RootBarController());
-  ScrollController scrollHctrl = ScrollController();
-  int scrollv = 0;
 
   @override
   void initState() {
@@ -28,23 +26,18 @@ class _HomeViewState extends State<HomeView> {
 
     appc.scrollVctrl.addListener(() {
       appc.onScrollV(appc.scrollVctrl.offset);
-      setState(() {
-        scrollv = appc.scrollVctrl.offset.toInt();
-      });
     });
 
     super.initState();
   }
 
-  void scrollAnimated(double position) {
-    appc.scrollVctrl.animateTo(405,
-        duration: const Duration(seconds: 1), curve: Curves.easeInOut);
+  void setStateIfMounted(f) {
+    if (mounted) setState(f);
   }
 
   @override
   void dispose() {
     // dispose the controller
-    appc.scrollVctrl.dispose();
     super.dispose();
   }
 
@@ -73,54 +66,61 @@ class _HomeViewState extends State<HomeView> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                onTap: () => {
-                  setState(() => {
-                        appc.homeIndex.value = 0,
-                        appc.scrollVctrl.animateTo(0,
-                            duration: const Duration(seconds: 1),
-                            curve: Curves.easeInOut),
-                      }),
-                },
-                child: Text('Discover',
-                    style: topBtnStyle(
-                        color: (appc.homeIndex.value == 0 && scrollv <= 200) ||
-                                scrollv <= 200
-                            ? HexColor('2c698d')
-                            : HexColor('acaadd'))),
-              ),
+                  onTap: () => {
+                        setState(() => {
+                              appc.homeIndex.value = 0,
+                              appc.scrollVctrl.animateTo(0,
+                                  duration: const Duration(seconds: 1),
+                                  curve: Curves.easeInOut),
+                            }),
+                      },
+                  child: Obx(
+                    () => Text('Discover',
+                        style: topBtnStyle(
+                            color: (appc.homeIndex.value == 0 &&
+                                        appc.scrollv.value <= 200) ||
+                                    appc.scrollv.value <= 200
+                                ? HexColor('2c698d')
+                                : HexColor('acaadd'))),
+                  )),
               GestureDetector(
-                onTap: () => {
-                  setState(() => {
-                        appc.homeIndex.value = 1,
-                        appc.scrollVctrl.animateTo(405,
-                            duration: const Duration(seconds: 1),
-                            curve: Curves.easeInOut),
-                      }),
-                },
-                child: Text('Videos',
-                    style: topBtnStyle(
-                        color: (appc.homeIndex.value == 1 &&
-                                    (scrollv >= 201 && scrollv <= 610)) ||
-                                (scrollv >= 201 && scrollv <= 610)
-                            ? HexColor('2c698d')
-                            : HexColor('acaadd'))),
-              ),
+                  onTap: () => {
+                        setState(() => {
+                              appc.homeIndex.value = 1,
+                              appc.scrollVctrl.animateTo(405,
+                                  duration: const Duration(seconds: 1),
+                                  curve: Curves.easeInOut),
+                            }),
+                      },
+                  child: Obx(
+                    () => Text('Videos',
+                        style: topBtnStyle(
+                            color: (appc.homeIndex.value == 1 &&
+                                        (appc.scrollv.value >= 201 &&
+                                            appc.scrollv.value <= 610)) ||
+                                    (appc.scrollv.value >= 201 &&
+                                        appc.scrollv.value <= 610)
+                                ? HexColor('2c698d')
+                                : HexColor('acaadd'))),
+                  )),
               GestureDetector(
-                onTap: () => {
-                  setState(() => {
-                        appc.homeIndex.value = 2,
-                        appc.scrollVctrl.animateTo(812,
-                            duration: const Duration(seconds: 1),
-                            curve: Curves.easeInOut),
-                      }),
-                },
-                child: Text('Collection',
-                    style: topBtnStyle(
-                        color: appc.homeIndex.value == 2 && scrollv >= 610 ||
-                                scrollv >= 610
-                            ? HexColor('2c698d')
-                            : HexColor('acaadd'))),
-              ),
+                  onTap: () => {
+                        setState(() => {
+                              appc.homeIndex.value = 2,
+                              appc.scrollVctrl.animateTo(812,
+                                  duration: const Duration(seconds: 1),
+                                  curve: Curves.easeInOut),
+                            }),
+                      },
+                  child: Obx(
+                    () => Text('Collection',
+                        style: topBtnStyle(
+                            color: appc.homeIndex.value == 2 &&
+                                        appc.scrollv.value >= 610 ||
+                                    appc.scrollv.value >= 610
+                                ? HexColor('2c698d')
+                                : HexColor('acaadd'))),
+                  )),
               GestureDetector(
                 onTap: () => {
                   setState(() => {appc.filter.value = !appc.filter.value})

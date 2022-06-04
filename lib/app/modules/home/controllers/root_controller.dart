@@ -67,6 +67,7 @@ class RootBarController extends GetxController {
   @override
   void dispose() {
     scrollHctrl.dispose();
+    scrollVctrl.dispose();
     super.dispose();
   }
 }

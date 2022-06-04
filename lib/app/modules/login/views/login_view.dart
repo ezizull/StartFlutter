@@ -6,8 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:start/app/components/topbar/textbar.dart';
 import 'package:start/app/controllers/auth_controller.dart';
 import 'package:start/app/modules/login/controllers/login_controller.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:start/app/routes/app_pages.dart';
 
 class LoginView extends StatefulWidget {
@@ -18,9 +16,6 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final authC = Get.find<AuthController>();
   final loginC = Get.put(LoginController());
-
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  late FlutterLocalNotificationsPlugin fltNotification;
 
   late SharedPreferences preferences;
 

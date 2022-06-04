@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -41,9 +40,6 @@ class AuthController extends GetxController {
       ));
     }
     super.onInit();
-
-    pushFCMtoken();
-    initMessaging();
   }
 
   void userData({
@@ -86,49 +82,13 @@ class AuthController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   Stream<User?> get streamAuthStatus => auth.authStateChanges();
 
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  late FlutterLocalNotificationsPlugin fltNotification;
-
-  void pushFCMtoken() async {
-    String? token = await messaging.getToken();
-    print(token);
-  }
-
-  void initMessaging() {
-    var androiInit =
-        AndroidInitializationSettings('@mipmap/ic_launcher'); //for logo
-    var iosInit = IOSInitializationSettings();
-    var initSetting = InitializationSettings(android: androiInit, iOS: iosInit);
-
-    fltNotification = FlutterLocalNotificationsPlugin();
-    fltNotification.initialize(initSetting);
-
-    var androidDetails = AndroidNotificationDetails(
-      '1',
-      'channelName',
-    );
-
-    var iosDetails = IOSNotificationDetails();
-    var generalNotificationDetails =
-        NotificationDetails(android: androidDetails, iOS: iosDetails);
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-      if (notification != null && android != null) {
-        fltNotification.show(notification.hashCode, notification.title,
-            notification.body, generalNotificationDetails);
-      }
-    });
-  }
-
   void login(String Email, String Password) async {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: Email, password: Password);
+      print(userCredential);
       if (userCredential.user!.emailVerified) {
         userData(id: '0', username: Email);
-        print(userCredential);
         Get.offAllNamed(Routes.ROOT);
       } else {
         Get.defaultDialog(
