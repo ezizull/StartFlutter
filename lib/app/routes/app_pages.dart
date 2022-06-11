@@ -1,15 +1,13 @@
 import 'package:get/get.dart';
-import 'package:start/app/modules/home/views/contact/chat_view.dart';
-import 'package:start/app/modules/home/views/contact/info_view.dart';
-import 'package:start/app/modules/home/views/rootbar_view.dart';
-import 'package:start/app/modules/login/views/login_view.dart';
-import 'package:start/app/modules/login/bindings/login_binding.dart';
-import 'package:start/app/modules/register/bindings/register_binding.dart';
-import 'package:start/app/modules/register/views/register_view.dart';
-import 'package:start/app/modules/repass/bindings/repass_binding.dart';
-import 'package:start/app/modules/repass/views/repass_view.dart';
+import 'package:start/app/screens/root/views/rootbar_view.dart';
+import 'package:start/app/screens/login/views/login_view.dart';
+import 'package:start/app/screens/login/bindings/login_binding.dart';
+import 'package:start/app/screens/register/bindings/register_binding.dart';
+import 'package:start/app/screens/register/views/register_view.dart';
+import 'package:start/app/screens/repass/bindings/repass_binding.dart';
+import 'package:start/app/screens/repass/views/repass_view.dart';
 
-import '../modules/home/bindings/root_binding.dart';
+import '../screens/root/bindings/root_binding.dart';
 
 part 'app_routes.dart';
 
